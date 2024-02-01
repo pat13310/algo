@@ -11,3 +11,9 @@
 
 
 ![Alt text](image.png)
+
+
+
+# Schéma de base
+
+![Uploading morpion.jpg…]()
