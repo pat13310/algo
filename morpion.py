@@ -3,7 +3,7 @@ userOneInput=[]
 userTwoInput=[]
 PICT_X="XXX"
 PICT_O="OOO"
-matrix = [["X", "2", "X"], ["4", "X", "6"],  ["X", "8", "9"]]
+matrix = [["O", "O", "O"], ["4", "X", "6"],  ["X", "8", "9"]]
 
 def showRules():
     rules_text = """
@@ -54,10 +54,8 @@ def checkCol():
 
 def verifyScheme(pattern):
     car=""
-    for x in pattern:        
-        row=x[0]
-        col=x[1]
-        car+=str(matrix[row][col])
+    for cell in pattern:        
+        car+=str(matrix[cell[0]][cell[1]])
     
     if car in ( PICT_X + PICT_O):
         return True
