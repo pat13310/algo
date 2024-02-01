@@ -1,8 +1,9 @@
 userfirst=False
 userOneInput=[]
 userTwoInput=[]
-
-matrix = [["X", "2", "3"], ["X", "5", "6"],  ["X", "8", "9"]]
+PICT_X="XXX"
+PICT_O="OOO"
+matrix = [["X", "2", "X"], ["4", "X", "6"],  ["X", "8", "9"]]
 
 def showRules():
     rules_text = """
@@ -35,36 +36,54 @@ def getInputUser():
     else:
         userTwoInput.append(input("Joueur 2 :"))
 
-def checkRow():
-    
-    for row in matrix:
-        row_as_string = "".join(map(str, matrix[0]))
-        if row_as_string in "XXX":
-            return True
-        if row_as_string in "OOO":
-            return True
-            
+def checkRow():    
+    for i in range(3):
+        row_as_string = "".join(map(str, matrix[i]))
+        if row_as_string in (PICT_X + PICT_O):
+            return True     
     return False
 
 def checkCol():
     for row in range(3):
-        cell=""
+        car=""
         for col in range(3):
-            st=str(matrix[col][row])
-            cell+=st   
-        if cell in  "XXX" or cell in "OOO":
+            car+=str(matrix[col][row])
+        if car in ( PICT_X + PICT_O):
             return True
     return False
 
+def verifyScheme(pattern):
+    car=""
+    for x in pattern:        
+        row=x[0]
+        col=x[1]
+        car+=str(matrix[row][col])
+    
+    if car in ( PICT_X + PICT_O):
+        return True
+    
+    return False
+
 def checkDiagonal():
-    pass
+    pattern1=[[0,0],[1,1],[2,2]]
+    pattern2=[[0,2],[1,1],[2,0]]
+            
+    if verifyScheme(pattern1):
+        return True
+    elif verifyScheme(pattern2):
+        return True
+    
+    return False
 
 def checkWinner():
-    win=False
-    win=checkRow()
-    win=checkCol()
-    win=checkDiagonal()
-    return win
+    
+    if checkRow():
+        return True
+    elif checkCol():
+        return True
+    elif checkDiagonal():
+        return True
+    return False
 
 
 def showMorpion():
@@ -72,5 +91,5 @@ def showMorpion():
         if cell%3==0:
             pass
 
+print(checkWinner())
 
-checkWinner()
