@@ -79,6 +79,6 @@ class DevineNombreMagique:
 if __name__ == "__main__":
     jeu = DevineNombreMagique()
     jeu.jouer()
-    
+
     
 
