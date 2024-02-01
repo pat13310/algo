@@ -16,4 +16,5 @@
 
 # Schéma de base
 
-![Uploading morpion.jpg…]()
+
+![morpion](https://github.com/pat13310/algo/assets/122201455/0189ddf5-2197-407b-b5f9-5eeca9eb87d7)
