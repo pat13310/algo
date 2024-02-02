@@ -1,5 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout,QHBoxLayout, QWidget, QLabel, QMessageBox
+from PySide6.QtGui import QPalette, QColor, QRadialGradient
 
 class Morpion(QMainWindow):
     def __init__(self):
@@ -8,6 +9,7 @@ class Morpion(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        self.current_player="X"
         self.setWindowTitle('Morpion')
         self.setGeometry(100, 100, 300, 300)
 
@@ -26,14 +28,16 @@ class Morpion(QMainWindow):
             for j in range(3):
                 button = QPushButton('', self)
                 button.setFixedSize(90, 90) 
+                self.set_button_style(button)
                 button.clicked.connect(lambda checked=False, row=i, col=j: self.button_clicked(row, col))
                 row_layout.addWidget(button)
                 self.buttons[i][j] = button
+                
             self.layout.addLayout(row_layout)
 
         self.central_widget.setLayout(self.layout)
 
-        self.current_player = 'X'
+        #self.current_player = 'X'
         self.board = [['' for _ in range(3)] for _ in range(3)]
         self.game_over = False
 
@@ -88,8 +92,32 @@ class Morpion(QMainWindow):
         for i in range(3):
             for j in range(3):
                 self.buttons[i][j].setText('')
+                self.set_button_style(self.buttons[i][j])
 
         self.label.setText(f"Tour du joueur {self.current_player}")
+
+    def set_button_style(self, button):
+        color='red' if self.current_player == 'X' else 'green'
+        style = """
+        QPushButton {
+            background: qradialgradient(cx: 0.5, cy: 0.5, radius: 0.5, fx: 0.5, fy: 0.5,
+                                        stop: 0 #2e2e2e, stop: 1 #3c3c3c);
+            border: 2px solid #3c3c3c;
+            border-radius: 10px;            
+            color: {{"{color}"}};
+            font-size: 18px;
+            font-weight: bold;
+        }
+        QPushButton:hover {
+            background: qradialgradient(cx: 0.5, cy: 0.5, radius: 0.5, fx: 0.5, fy: 0.5,
+                                        stop: 0 #3c3c3c, stop: 1 #5a5a5a);
+        }
+        QPushButton:pressed {
+            background: qradialgradient(cx: 0.5, cy: 0.5, radius: 0.5, fx: 0.5, fy: 0.5,
+                                        stop: 0 #1e1e1e, stop: 1 #5a5a5a);
+        }
+        """
+        button.setStyleSheet(style)
 
 
 if __name__ == '__main__':
