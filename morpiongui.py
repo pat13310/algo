@@ -37,7 +37,6 @@ class Morpion(QMainWindow):
 
         self.central_widget.setLayout(self.layout)
 
-        #self.current_player = 'X'
         self.board = [['' for _ in range(3)] for _ in range(3)]
         self.game_over = False
 
@@ -45,13 +44,21 @@ class Morpion(QMainWindow):
         if not self.game_over and self.board[row][col] == '':
             self.board[row][col] = self.current_player
             self.buttons[row][col].setText(self.current_player)
+        palette = QPalette()
+        if self.current_player == 'X':
+            text_color = QColor('green')
+        else:
+            text_color = QColor('red')
 
-            if self.check_winner():
-                self.show_winner()
-            elif self.check_full():
-                self.show_match_nul()
-            else:
-                self.toggle_player()
+        palette.setColor(QPalette.ButtonText, text_color)
+        self.buttons[row][col].setPalette(palette)
+
+        if self.check_winner():
+            self.show_winner()
+        elif self.check_full():
+            self.show_match_nul()
+        else:
+            self.toggle_player()
 
     def toggle_player(self):
         self.current_player = 'O' if self.current_player == 'X' else 'X'
@@ -96,15 +103,15 @@ class Morpion(QMainWindow):
 
         self.label.setText(f"Tour du joueur {self.current_player}")
 
+
     def set_button_style(self, button):
-        color='red' if self.current_player == 'X' else 'green'
+        
         style = """
         QPushButton {
             background: qradialgradient(cx: 0.5, cy: 0.5, radius: 0.5, fx: 0.5, fy: 0.5,
                                         stop: 0 #2e2e2e, stop: 1 #3c3c3c);
             border: 2px solid #3c3c3c;
             border-radius: 10px;            
-            color: {{"{color}"}};
             font-size: 18px;
             font-weight: bold;
         }
